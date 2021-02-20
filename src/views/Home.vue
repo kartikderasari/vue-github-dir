@@ -2,12 +2,19 @@
   <div class="home">
     <v-container fluid class="mt-16">
       <v-row justify="center">
-        <v-col cols="8">
-          <!-- :getUserData="childtoParentUserData(value)"
-            :getRepo="childtoParentRepo(value)"
-            :getOrganizations="childtoParentOrganizations(value)" -->
-          <searchUser @childtoParentUserData="getUserData(value)" />
-          <resultUser userData="" repos="" organizations="" />
+        <v-col cols="12" lg="8" md="10" sm="11">
+          <searchUser
+            @childtoParentUserData="getUserData"
+            @childtoParentRepo="getRepo"
+            @childtoParentOrganizations="getOrganizations"
+          />
+
+          <resultUser
+            v-if="userData != null"
+            :userData="userData"
+            :repos="repos"
+            :organizations="organizations"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -30,18 +37,12 @@ export default {
   methods: {
     getUserData: function(value) {
       this.userData = value;
-      console.log("userData");
-      console.log(this.userData);
     },
     getRepo: function(value) {
       this.repos = value;
-      console.log("repos");
-      console.log(this.repos);
     },
     getOrganizations: function(value) {
       this.organizations = value;
-      console.log("organizations");
-      console.log(this.organizations);
     },
   },
 };

@@ -1,21 +1,52 @@
 <template>
   <v-row>
-    <v-col>
-      <v-card outlined>
+    <v-col cols="12" lg="12" md="12" sm="12">
+      <v-card outlined v-if="userData.hasOwnProperty('login')">
         <v-card-text>
           <v-container fluid fill-height>
             <v-row>
-              <v-col cols="2">
-                <v-avatar color="teal" size="100">
-                  <v-icon dark>
-                    mdi-account-circle
-                  </v-icon>
+              <v-col cols="12" lg="2" md="12" sm="12" align="center">
+                <v-avatar size="150">
+                  <img :src="userData.avatar_url" />
                 </v-avatar>
               </v-col>
-              <v-col align-self="center" cols="10">
-                <h2>Name</h2>
-                <h4>@ahufaohaosdh</h4>
-                <p>asdasdasd</p>
+              <v-col
+                class="text-center text-lg-start text-sm-center"
+                align-self="center"
+                cols="12"
+                lg="10"
+                md="12"
+                sm="12"
+              >
+                <h2>{{ userData.name }}</h2>
+                <h4>
+                  <a
+                    class="teal--text text--darken-2 text-decoration-none "
+                    :href="userData.html_url"
+                    target="_blank"
+                  >
+                    @{{ userData.login }}</a
+                  >
+                </h4>
+                <p>
+                  <a
+                    class="teal--text text--darken-2 text-decoration-none "
+                    :href="
+                      'https://github.com/' + userData.login + '?tab=followers'
+                    "
+                  >
+                    {{ userData.followers }} followers
+                  </a>
+                  |
+                  <a
+                    class="teal--text text--darken-2 text-decoration-none "
+                    :href="
+                      'https://github.com/' + userData.login + '?tab=following'
+                    "
+                  >
+                    {{ userData.following }} following
+                  </a>
+                </p>
               </v-col>
             </v-row>
             <v-row>
@@ -26,15 +57,15 @@
                   <v-tab href="#repo">
                     Repositories
                   </v-tab>
-                  <v-tab href="#two">
+                  <v-tab href="#orgs">
                     Organizations
                   </v-tab>
 
-                  <v-tab-item id="repo" value="one">
-                    <Repositories />
+                  <v-tab-item id="repo" value="repo">
+                    <Repositories :repos="repos" />
                   </v-tab-item>
-                  <v-tab-item id="two" value="two">
-                    <Organizations />
+                  <v-tab-item id="orgs" value="orgs">
+                    <Organizations :organizations="organizations" />
                   </v-tab-item>
                 </v-tabs>
               </v-col>
@@ -49,12 +80,9 @@
 <script>
 import Repositories from "../components/Repositories";
 import Organizations from "../components/Organizations";
+
 export default {
   components: { Repositories, Organizations },
-  data: () => {
-    return {
-      repo: null,
-    };
-  },
+  props: ["userData", "repos", "organizations"],
 };
 </script>
